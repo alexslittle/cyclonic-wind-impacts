@@ -17,7 +17,7 @@ Python code used in the study of 21C-end changes in extratropical cyclone freque
 
 ### Set up Python environment (pip)
 
-1. Install virtualenv if not already: `pip install virtualenv`
+1. Install virtualenv if not already: `python3 -m pip install virtualenv`
 2. Activate the environment: `source venv/bin/activate`
 
 3. Install all packages required by the project: `pip install -r requirements.txt`

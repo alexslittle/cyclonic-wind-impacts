@@ -1,0 +1,6 @@
+b2sdk
+netCDF4
+numpy
+pandas
+xarray
+tqdm

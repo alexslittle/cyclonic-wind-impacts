@@ -149,7 +149,6 @@ for experiment in tqdm(sorted(experiments),
                                                        lat_grid,
                                                        lon_grid,
                                                        impact_radius,
-                                                       resolution,
                                                        )
 
                             # Get maximum wind speeds around the current point

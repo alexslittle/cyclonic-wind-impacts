@@ -58,7 +58,7 @@ This code is licensed under the GNU General Public License v3.0.
 ## Author
 Alex Little 
 
-[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](www.linkedin.com/in/alexslittle)
+[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/alexslittle)
 
 ## Acknowledgements
 Thanks to the co-authors for assisting with code structure and development throughout the project:

@@ -68,19 +68,15 @@ def _circle_mask(lat_centre: float,
                  lat_grid: np.ndarray,
                  lon_grid: np.ndarray,
                  radius: float,
-                 resolution: float,
                  ) -> np.ndarray:
     """
     Create a circular mask centred at given geographical coordinates.
     """
-    # Calculate radius of circle on the grid
-    grid_radius = radius / resolution
-
     # Calculate distance of each point from the circle centre
     dist_from_centre = np.sqrt((lat_grid - lat_centre) ** 2 + (lon_grid - lon_centre) ** 2)
 
     # Mask all points outside the circle
-    return dist_from_centre <= grid_radius
+    return dist_from_centre <= radius
 
 
 def _shift_time(time: pd.DatetimeIndex,

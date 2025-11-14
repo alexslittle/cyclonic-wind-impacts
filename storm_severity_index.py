@@ -1,15 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-@File    :   generate_ssis.py
-@Date    :   2022/06/04
-@Author  :   Alex Little
-@Desc    :   Calculate storm severity indices for individual cyclone tracks
-"""
-
-# --------------------------------------------------------------------------------
-
 # Built-in modules
 import math
 from pathlib import Path
@@ -19,17 +10,18 @@ import xarray as xr
 from tqdm import tqdm
 
 # Side modules
-from base_funcs import _extreme_winds
+from utils import _extreme_winds
 from params import *
 
 # Loop through experiments
-for experiment in tqdm(sorted(experiments),
-                       total=len(experiments),
-                       position=1,
-                       leave=False,
-                       desc="EXPERIMENT",
-                       colour="magenta",
-                       ):
+for experiment in tqdm(
+    sorted(experiments),
+    total=len(experiments),
+    position=1,
+    leave=False,
+    desc="EXPERIMENT",
+    colour="magenta",
+):
 
     # Read population data for the given experiment
     population = xr.open_dataset(
@@ -39,13 +31,14 @@ for experiment in tqdm(sorted(experiments),
     )
 
     # Loop through CMIP6 models and ERA5 reanalysis
-    for model in tqdm(sorted(models),
-                      total=len(models),
-                      position=2,
-                      leave=False,
-                      desc="MODEL",
-                      colour="red",
-                      ):
+    for model in tqdm(
+        sorted(models),
+        total=len(models),
+        position=2,
+        leave=False,
+        desc="MODEL",
+        colour="red",
+    ):
 
         # Only historical data exists for ERA5
         if experiment != "historical" and model == "ERA5":
@@ -63,8 +56,10 @@ for experiment in tqdm(sorted(experiments),
             adjusted_extremes = _extreme_winds(wind_field, impact_threshold)
 
             # List individual footprint files (ignore hidden files)
-            footprint_files = [f for f in Path(f"./outputs/footprints/{experiment}/{model}").iterdir()
-                               if not f.name.startswith(".")]
+            footprint_files = [
+                f for f in Path(f"./outputs/footprints/{experiment}/{model}").iterdir()
+                if not f.name.startswith(".")
+            ]
 
             # Create subdirectory to contain output footprints
             subdir = Path(f"./outputs/ssis/{experiment}/{model}/")
@@ -73,12 +68,13 @@ for experiment in tqdm(sorted(experiments),
             # Initialise accumulated loss
             accumulated_loss = 0
 
-            for path in tqdm(sorted(footprint_files),
-                             total=len(footprint_files),
-                             leave=False,
-                             desc="SSI",
-                             colour="white",
-                             ):
+            for path in tqdm(
+                sorted(footprint_files),
+                total=len(footprint_files),
+                leave=False,
+                desc="SSI",
+                colour="white",
+            ):
 
                 # Get maximum wind speeds across domain attributable to the cyclone over its lifetime
                 footprint = xr.open_dataset(path)
@@ -90,10 +86,10 @@ for experiment in tqdm(sorted(experiments),
                 )
 
                 # Calculate storm severity index (unweighted)
-                ssi = (((exceedance_footprint / adjusted_extremes) - 1) ** 3).rename(
-                    {"sfcWind": "ssi"},
-                ).drop_vars(
-                    "quantile",
+                ssi = (
+                    (((exceedance_footprint / adjusted_extremes) - 1) ** 3)
+                    .rename({"sfcWind": "ssi"})
+                    .drop_vars("quantile")
                 )
 
                 # Calculate population-weighted storm severity index and assign to dataset
